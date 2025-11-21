@@ -4,6 +4,8 @@ import SearchBar from '../../components/SearchBar';
 import CircleButton from '../../components/CircleButton';
 import StoreDetailBottomSheet from '../../components/StoreDeatailBottomSheet';
 import FavoriteBottomSheet from '../../components/FavoriteBottomSheet';
+import RecomendBottomSheet from '../../components/RecommendBottomSheet';
+import MyInfoBottomSheet from '../../components/MyInfoBottomSheet';
 
 const mockStores = [
   {
@@ -147,7 +149,9 @@ export default function Map() {
   const [filteredStores, setFilteredStores] = useState(mockStores);
   const [selectedStore, setSelectedStore] = useState(null);
   const [storeSheetOpen, setStoreSheetOpen] = useState(false);
+  const [RecommendSheetOpen, setRecommendSheetOpen] = useState(false);
   const [favoriteSheetOpen, setFavoriteSheetOpen] = useState(false);
+  const [myinfoSheetOpen, setMyInfoSheetOpen] = useState(false);
   const handleSearch = (keyword: string) => {
     if (!keyword.trim()) {
       setFilteredStores(mockStores);
@@ -165,16 +169,27 @@ export default function Map() {
         onSelect={(store) => setSelectedStore(store)} // 🔥 선택된 가게 저장
       />
 
-      {/* 즐겨찾기 버튼 */}
-      <button
+      <CircleButton
         className="absolute top-70 right-4 z-50"
         onClick={() => setFavoriteSheetOpen(true)}
-      >
-        <CircleButton icon="⭐" />
-      </button>
+        icon="⭐"
+        label="즐겨찾기"
+      />
 
       {/* AI 추천 버튼 */}
-      <CircleButton icon="🤖" className="absolute top-90 right-4 z-50" />
+      <CircleButton
+        onClick={() => setRecommendSheetOpen(true)}
+        icon="🤖"
+        className="absolute top-90 right-4 z-50"
+        label="AI 추천 메뉴"
+      />
+
+      <CircleButton
+        icon="👤"
+        className="absolute top-110 right-4 z-50"
+        label="내 정보"
+        onClick={() => setMyInfoSheetOpen(true)}
+      />
 
       <KakaoMap
         stores={filteredStores}
@@ -191,6 +206,19 @@ export default function Map() {
       <FavoriteBottomSheet
         open={favoriteSheetOpen}
         onClose={() => setFavoriteSheetOpen(false)}
+        onSelect={(store) => {
+          setSelectedStore(store);
+        }}
+      />
+
+      <RecomendBottomSheet
+        open={RecommendSheetOpen}
+        onClose={() => setRecommendSheetOpen(false)}
+      />
+
+      <MyInfoBottomSheet
+        open={myinfoSheetOpen}
+        onClose={() => setMyInfoSheetOpen(false)}
       />
     </div>
   );

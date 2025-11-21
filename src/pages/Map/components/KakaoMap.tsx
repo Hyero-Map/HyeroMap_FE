@@ -38,14 +38,12 @@ export default function KakaoMap({ stores, selectedStore, onMarkerSelect }) {
 
     mapRef.current = map;
 
-    // 🔵 blue-dot svg 마커 이미지
     const blueDotImage = new kakao.maps.MarkerImage(
       '/marker/marker-blue.svg',
       new kakao.maps.Size(18, 18),
       { offset: new kakao.maps.Point(9, 9) }
     );
 
-    // 🔵 기본 초기 현재 위치 마커 생성
     const initialMarker = new kakao.maps.Marker({
       position: new kakao.maps.LatLng(currentPos.lat, currentPos.lng),
       map,
@@ -54,7 +52,6 @@ export default function KakaoMap({ stores, selectedStore, onMarkerSelect }) {
 
     currentLocationMarkerRef.current = initialMarker;
 
-    // 🟢🔴 가게 마커 생성
     const greenMarker = '/marker/marker-green.svg';
     const redMarker = '/marker/marker-red.svg';
 
@@ -133,6 +130,7 @@ export default function KakaoMap({ stores, selectedStore, onMarkerSelect }) {
         icon="📍"
         onClick={goToCurrentLocation}
         className="absolute top-50 right-4 z-50"
+        label="내 위치"
       />
     </div>
   );
