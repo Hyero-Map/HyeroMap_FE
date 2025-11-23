@@ -65,9 +65,6 @@ export default function KakaoMap({
       // const se = bounds.getSouthEast();
       // const nw = bounds.getNorthWest();
 
-      console.log('좌하단(SW):', sw.getLat(), sw.getLng());
-      console.log('우상단(NE):', ne.getLat(), ne.getLng());
-
       // console.log('좌상단(NW):', nw.getLat(), nw.getLng());
     });
 
@@ -100,16 +97,17 @@ export default function KakaoMap({
       );
 
       const stMarker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(store.lat, store.lng),
+        position: new kakao.maps.LatLng(store.latitude, store.longitude),
         map,
         image: markerImage,
       });
 
       kakao.maps.event.addListener(stMarker, 'click', () => {
-        const pos = new kakao.maps.LatLng(store.lat, store.lng);
+        const pos = new kakao.maps.LatLng(store.latitude, store.longitude);
         map.setLevel(2, { anchor: pos });
         map.panTo(pos);
         onMarkerSelect(store);
+        console.log('가게 선택:', store);
       });
     });
   }, [currentPos]);
@@ -120,8 +118,8 @@ export default function KakaoMap({
 
     const { kakao } = window;
     const pos = new kakao.maps.LatLng(
-      selectedStore.lat - 0.0005,
-      selectedStore.lng
+      selectedStore.latitude - 0.0005,
+      selectedStore.longitude
     );
 
     mapRef.current.setLevel(2, { anchor: pos });
@@ -178,7 +176,7 @@ export default function KakaoMap({
         pos.coords.latitude,
         pos.coords.longitude
       );
-
+      console.log('현재 위치로 이동:', loc);
       // ⭐ 현재 위치로 이동하면서 level 3으로 고정
       mapRef.current.setLevel(3, { anchor: loc });
       mapRef.current.panTo(loc);
@@ -214,11 +212,11 @@ export default function KakaoMap({
     kakao.maps.event.addListener(map, 'bounds_changed', () => {
       const bounds = map.getBounds();
 
-      const sw = bounds.getSouthWest();
-      const ne = bounds.getNorthEast();
+      // const sw = bounds.getSouthWest();
+      // const ne = bounds.getNorthEast();
 
-      console.log('좌하단(SW):', sw.getLat(), sw.getLng());
-      console.log('우상단(NE):', ne.getLat(), ne.getLng());
+      // console.log('좌하단(SW):', sw.getLat(), sw.getLng());
+      // console.log('우상단(NE):', ne.getLat(), ne.getLng());
     });
   }, []);
 

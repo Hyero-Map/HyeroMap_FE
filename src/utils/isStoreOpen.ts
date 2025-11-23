@@ -1,19 +1,35 @@
-export const isStoreOpen = (store) => {
+export interface DailyHours {
+  start: string;
+  end: string;
+}
+
+export interface OperatingHours {
+  weekday?: DailyHours | null;
+  saturday?: DailyHours | null;
+  holiday?: DailyHours | null;
+}
+
+export interface Store {
+  operatingHours?: OperatingHours | null;
+}
+
+export const isStoreOpen = (store: Store | null | undefined): boolean => {
+  if (!store?.operatingHours) return false;
+
   const now = new Date();
-  const day = now.getDay(); // 0=일, 6=토
+  const day = now.getDay();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-  // 현재 요일별 시간 선택
-  let hours;
+  let hours: DailyHours | null | undefined;
+
   if (day === 0) {
-    hours = store.weekend;
+    hours = store.operatingHours.holiday;
   } else if (day === 6) {
-    hours = store.saturday;
+    hours = store.operatingHours.saturday;
   } else {
-    hours = store.weekday;
+    hours = store.operatingHours.weekday;
   }
 
-  // 운영정보가 없는 경우
   if (!hours || !hours.start || !hours.end) return false;
 
   const [startH, startM] = hours.start.split(':').map(Number);

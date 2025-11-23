@@ -1,63 +1,35 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-
-const favoriteMock = [
-  {
-    id: 101,
-    name: '대구 동성로 시니어 할인식당',
-    roadAddress: '대구 중구 동성로 25',
-    lat: 35.8682,
-    lng: 128.5987,
-    phone: '053-111-1111',
-    minAge: 65,
-    discountPercent: 30,
-    discountAmount: null,
-    serviceType: '식사 할인',
-    extraInfo: '신분증 지참',
-    weekday: { start: '09:00', end: '20:00' },
-    saturday: { start: '10:00', end: '19:00' },
-    weekend: { start: '10:00', end: '19:00' },
-    categoryCode: 'FNB001',
-  },
-  {
-    id: 102,
-    name: '대구 현대백화점 시니어 영화할인',
-    roadAddress: '대구 중구 달구벌대로 2077',
-    lat: 35.8701,
-    lng: 128.5938,
-    phone: '053-222-2222',
-    minAge: 65,
-    discountPercent: null,
-    discountAmount: 5000,
-    serviceType: '영화 할인',
-    extraInfo: '평일 낮 시간대만 적용',
-    weekday: { start: '10:00', end: '20:00' },
-    saturday: { start: '10:00', end: '21:00' },
-    weekend: { start: '10:00', end: '21:00' },
-    categoryCode: 'CULTURE002',
-  },
-  {
-    id: 103,
-    name: '대구 삼덕동 문화센터 시니어 강좌',
-    roadAddress: '대구 중구 삼덕동3가 201',
-    lat: 35.8665,
-    lng: 128.6112,
-    phone: '053-333-3333',
-    minAge: 60,
-    discountPercent: 20,
-    discountAmount: null,
-    serviceType: '문화 강좌 할인',
-    extraInfo: '일부 강좌 제외',
-    weekday: { start: '09:00', end: '20:00' },
-    saturday: { start: '10:00', end: '20:00' },
-    weekend: { start: '10:00', end: '20:00' },
-    categoryCode: 'CULTURE003',
-  },
-];
+import { useEffect, useRef, useState } from 'react';
+import { getFavoriteStores } from '../api/favoriteApi';
 
 export default function FavoriteBottomSheet({ open, onClose, onSelect }) {
   const sheetRef = useRef(null);
+  const [favoriteList, setFavoriteList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  /** ⭐ 바텀시트 열릴 때 API 호출 */
+  useEffect(() => {
+    if (!open) return;
+
+    async function fetchFavoriteList() {
+      try {
+        setLoading(true);
+
+        const raw = await getFavoriteStores();
+        const list = Array.isArray(raw) ? raw : raw.data ?? [];
+
+        console.log('즐겨찾기 응답:', list);
+
+        setFavoriteList(list);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFavoriteList();
+  }, [open]);
+
+  /** 바깥 클릭 시 닫기 */
   useEffect(() => {
     function handleClickOutside(e) {
       if (sheetRef.current && !sheetRef.current.contains(e.target)) {
@@ -93,37 +65,72 @@ export default function FavoriteBottomSheet({ open, onClose, onSelect }) {
               h-4/5 overflow-y-auto
             "
           >
+            {/* ────────────────────────────────
+                헤더
+            ──────────────────────────────── */}
             <div className="flex justify-between items-center mb-3">
               <h2 className="text-lg font-bold">
-                즐겨찾기 목록 {favoriteMock.length}개
+                즐겨찾기 목록 {favoriteList.length}개
               </h2>
               <button onClick={onClose} className="text-gray-500 text-xl">
                 ✕
               </button>
             </div>
 
+            {loading && (
+              <p className="text-center text-gray-500 mt-10">불러오는 중...</p>
+            )}
+
+            {!loading && favoriteList.length === 0 && (
+              <p className="text-center text-gray-500 mt-10">
+                즐겨찾기한 가게가 없습니다.
+              </p>
+            )}
+
+            {/* ────────────────────────────────
+                즐겨찾기 리스트
+            ──────────────────────────────── */}
             <div className="flex flex-col gap-3">
-              {favoriteMock.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => {
-                    onSelect(item);
-                    onClose();
-                  }}
-                  className="
-                    p-4 border rounded-xl shadow-sm cursor-pointer
-                    hover:bg-gray-50 transition
-                  "
-                >
-                  <p className="font-semibold text-base">{item.name}</p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {item.roadAddress}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    혜택: {item.serviceType}
-                  </p>
-                </div>
-              ))}
+              {favoriteList.map((item) => {
+                const address = item.address ?? '주소 정보 없음';
+
+                const discountPercent =
+                  item.discountInfo?.discountPercent ?? null;
+                const discountAmount =
+                  item.discountInfo?.discountAmount ?? null;
+                const discountService =
+                  item.discountInfo?.discountService ?? null;
+
+                const discountText = discountPercent
+                  ? `${discountPercent}% 할인`
+                  : discountAmount
+                  ? `${discountAmount}원 할인`
+                  : discountService
+                  ? discountService
+                  : '할인 정보 없음';
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      onSelect(item);
+                      onClose();
+                    }}
+                    className="
+                      p-4 border rounded-xl shadow-sm cursor-pointer
+                      hover:bg-gray-50 transition
+                    "
+                  >
+                    <p className="font-semibold text-base">{item.name}</p>
+
+                    <p className="text-sm text-gray-500 mt-1">{address}</p>
+
+                    <p className="text-sm text-gray-700 mt-1">
+                      혜택: {discountText}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         </>

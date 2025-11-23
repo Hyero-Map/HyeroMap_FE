@@ -1,12 +1,25 @@
-// src/utils/parsePolyline.ts
+export interface Road {
+  vertexes: number[];
+}
 
-export function parseKakaoPolyline(roads, kakao) {
+export type KakaoLatLng = object;
+
+export interface Kakao {
+  maps: {
+    LatLng: new (lat: number, lng: number) => KakaoLatLng;
+  };
+}
+
+export function parseKakaoPolyline(
+  roads: Road[] | null | undefined,
+  kakao: Kakao
+): KakaoLatLng[] {
   if (!roads || roads.length === 0) return [];
 
-  const path = [];
+  const path: KakaoLatLng[] = [];
 
   roads.forEach((road) => {
-    const { vertexes } = road; // [lng1, lat1, lng2, lat2, ...]
+    const { vertexes } = road;
 
     for (let i = 0; i < vertexes.length; i += 2) {
       const lng = vertexes[i];

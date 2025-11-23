@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function SearchBar({ onSearch, results, onSelect }) {
   const [value, setValue] = useState('');
-  const wrapperRef = useRef(null); // 🔥 SearchBar 전체 ref
+  const wrapperRef = useRef(null);
   const isScrollable = results.length >= 3;
 
   const clearInput = () => {
@@ -13,11 +13,10 @@ export default function SearchBar({ onSearch, results, onSelect }) {
   useEffect(() => {
     function handleClickOutside(e) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        setValue(''); // 검색창 clear
-        onSearch(''); // 결과 초기화
+        setValue('');
+        onSearch('');
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -38,7 +37,7 @@ export default function SearchBar({ onSearch, results, onSelect }) {
 
         <input
           type="text"
-          placeholder="가게 이름을 검색하세요"
+          placeholder="가게 이름 또는 주소를 입력하세요"
           value={value}
           onChange={(e) => {
             const keyword = e.target.value;
@@ -72,11 +71,12 @@ export default function SearchBar({ onSearch, results, onSelect }) {
           ) : (
             results.map((item) => (
               <div
-                key={item.id}
+                key={item.storeId}
                 onClick={() => onSelect(item)}
                 className="p-2 border-b last:border-b-0 hover:bg-gray-100 cursor-pointer"
               >
-                {item.name}
+                <p className="font-semibold text-gray-800">{item.storeName}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{item.address}</p>
               </div>
             ))
           )}
