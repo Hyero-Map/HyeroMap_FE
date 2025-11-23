@@ -1,73 +1,118 @@
-# React + TypeScript + Vite
+# 🗺️ 혜로 - 혜로맵(HyeroMap)
+## 1. 서비스 요약
+### 혜로맵(HyeroMap) - 전국 경로우대 지정업소 안내 서비스 
+<img width="256" height="256" alt="image" src="https://github.com/user-attachments/assets/a3c95569-adec-4000-a0f3-464e2fd47c41" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **혜(惠)** — 혜택, 배려
+  - 고령자에게 실질적인 혜택을 제공한다는 의미를 포함합니다.
+  - 취약계층에 대한 배려의 성격을 담아 서비스의 사회적 가치를 강조합니다.
+- **로(路 / 老)** — 길 또는 노인
+  - 路 (길): 지도 기반 탐색, 이동 경로 안내, 위치 중심 추천 기능 등의 서비스 핵심 기능을 나타냅니다.
+  - 老 (노인): 고령층을 위한 맞춤형 서비스라는 가치를 강조합니다.
+- **Map** — 지도
+  - 실제 서비스의 기반이 되는 지도 기반 정보 탐색을 나타냅니다.
 
-Currently, two official plugins are available:
+## 2. 주제
+- **C타입** 복지의 사각지대에 놓인 사람들을 위한 서비스
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 3. 팀원 소개
+<div align="center">
+  
+### <혜로>
+|김현수|박준희|
+|:-----:|:---:|
+|[<img src="https://github.com/beoldshoe.png" width="100px">](https://github.com/beoldshoe)|[<img src="https://github.com/jjunii.png" width="100px">](https://github.com/jjunii)|
+|FE|BE|
+</div>
 
-## React Compiler
+## 4. 시연 영상
+🔗 https://www.youtube.com/watch?v=ZuIYF_EVHSI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 5. 서비스 소개
+### 5.1. 서비스 개요
+&nbsp; 혜로맵은 공공데이터포털의 「전국경로우대지정업소표준데이터」를 활용하여, 노년층이 생활권 내 경로우대 지정업소를 지도 기반으로 쉽고 편리하게 탐색할 수 있도록 지원하는 위치 기반 안내 서비스입니다.   
+&nbsp; 사용자의 GPS를 기반으로 주변 업소를 지도 위에 시각화하고, 업종·할인 정보·지원 연령·운영 시간 등 상세 정보를 제공하여 실제 방문까지 자연스럽게 이어질 수 있도록 돕습니다. 또한 즐겨찾기 기능을 제공해 반복적인 탐색의 부담을 줄였습니다.   
+&nbsp; 식당 업종의 경우, 사용자가 입력한 건강 정보를 바탕으로 AI가 적합한 메뉴를 제안하는 맞춤형 건강 추천 기능을 제공하여 노년층의 건강한 식생활을 지원합니다.
 
-## Expanding the ESLint configuration
+### 5.2. 타서비스와의 차별점
+&nbsp; 본 서비스와 관련된 유사 서비스로는
+- 전국 경로우대지정업소 조회 웹사이트,
+- 모바일 기반 경로우대 업소 정보 제공 서비스,
+- 지자체 생활지도(복지 시설, 경로우대 업소 포함)
+등이 존재합니다.
+&nbsp; 이들 서비스는 지도 기반 검색과 기본 정보 제공 기능을 제공한다는 점에서 공통적입니다.
+#### 1. 기존 서비스의 한계점   
+  - **로그인 및 즐겨찾기 기능의 실질적 부재**   
+&nbsp; 일부 웹사이트는 즐겨찾기 기능이 존재하더라도 로그인 기능이 제공되지 않거나, 구글 계정 등 고령층이 접근하기 어려운 방식을 사용합니다. 그 결과 사용자가 방문 의사가 있는 업소를 저장하고 다시 찾는 기능이 사실상 활용되기 어렵습니다.
+  - **개인 맞춤형 기능의 부족**   
+&nbsp; 기존 서비스는 대부분 정적인 업소 정보 제공에 머무르며, 사용자의 건강 상태, 나이, 식습관 등을 고려한 개인별 추천 기능은 지원하지 않습니다. 특히 식당의 경우에도 단순 위치 정보 중심으로 정보가 제공됩니다.
+#### 2. 혜로맵(HyeroMap)의 차별점
+  - **노인 친화적 로그인 방식 도입**   
+&nbsp; 혜로맵은 전화번호 + 비밀번호만으로 간단하게 로그인할 수 있는 방식을 제공합니다. 고령층이 계정을 생성하거나 로그인하는 과정에서 느끼는 장벽을 최소화합니다.
+  - **반복 사용을 고려한 즐겨찾기 경험 제공**   
+&nbsp; 간단한 로그인 환경을 기반으로 사용자는 원하는 장소를 즐겨찾기로 저장하고 필요할 때마다 빠르게 다시 조회할 수 있습니다. 이는 기존 타 서비스 대비 반복 방문이 많은 노년층의 사용 패턴에 적합한 기능입니다.
+  - **AI 기반 건강 맞춤형 추천 제공**   
+&nbsp; 식당 업종의 경우, 메뉴 데이터를 분석하고 사용자가 입력한 나이, 질환, 알레르기 등 건강 정보를 기반으로 AI가 적합한 메뉴를 추천하고 해당하는 식당을 안내하는 기능을 제공합니다. 단순한 위치 기반 업소 안내를 넘어 고령층의 실질적 건강 관리까지 연결되는 점에서 유사 서비스와의 명확한 차이점입니다.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 5.3. 구현 내용 및 결과물
+<img width="180" height="330" alt="image" src="https://github.com/user-attachments/assets/fd7fdfd8-90b4-45f2-9745-e6e656bea7e9" />
+<img width="180" height="330" alt="image" src="https://github.com/user-attachments/assets/1a9f826e-7d58-4ce4-b3f8-d661ed640eff" />
+<img width="180" height="330" alt="image" src="https://github.com/user-attachments/assets/c22b78b6-be73-4a3a-af51-fdd9495a753a" />
+<img width="180" height="330" alt="image" src="https://github.com/user-attachments/assets/74079860-731a-41f5-bcdb-670c30d6e618" />
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-	**위치 기반 경로우대 업소 탐색 기능**
+    -	사용자 현재 위치(GPS 기준)를 기반으로 주변 경로우대 지정업소를 지도에 시각화합니다.
+    -	공공데이터포털에서 제공하는 「전국경로우대지정업소표준데이터」를 DB에 저장하고, 지도 API를 통해 실시간으로 마커(업소 위치)를 표시합니다.
+    -	사용자는 지도에서 원하는 업소를 선택하여 상세 정보를 확인할 수 있습니다.
+-	**업소 상세 정보 조회**
+    -	업소명, 업종, 주소, 경로우대 적용 연령, 할인율, 운영 시간 등 핵심 정보를 제공합니다.
+    -	식당의 경우, 메뉴 정보도 추가하여 사용자가 실제 방문 시 필요한 정보를 중심으로 구성했습니다.
+    -	지도 기반 경로 안내 API와 연동하여 해당 업소까지의 이동 경로를 조회할 수 있습니다.
+-	**간편 로그인 및 회원 시스템**
+    -	전화번호 + 비밀번호 기반의 간단한 로그인/회원가입 기능을 구현하여 고령층 접근성을 높였습니다.
+-	**즐겨찾기 기능**
+    -	로그인한 사용자에게만 해당 기능을 제공하도록 분기합니다.
+    -	사용자는 자주 방문하는 업소를 즐겨찾기로 추가 및 삭제할 수 있습니다.
+    -	로그인 기반으로 다양한 기기에서도 동일한 즐겨찾기 목록을 확인할 수 있습니다.
+    -	이미 저장된 즐겨찾기일 경우 중복 등록을 방지하는 로직을 포함합니다.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 5.4. 구현 방식
+#### [FE]
+- 프레임워크: React
+- 언어: TypeScript
+- 빌드 도구: Vite
+- 상태 관리 라이브러리: Zustand, React Query
+- 스타일: Tailwind CSS, Framer Motion
+### ⚛️ Zustand & React Query
+&nbsp; 전역 상태는 Zustand를 사용해 직관적이고 가벼운 구조로 설계했습니다. 로그인 상태와 토큰 관리를 위하 persist 미들웨어 적용, localStorage 기반 영속성 유지 등 사용자 경험을 높이기 위한 구조를 구축했습니다. 서버 상태는 React Query를 통해 데이터 캐싱, 자동 리패치, staleTime 조정 등 고성능 상태 관리를 적용하여 API 기반 기능의 반응성을 높였습니다.
+### 📍 Kakao Maps를 활용한 위치 기반 기능
+&nbsp; 카카오 지도 SDK를 활용해 지도 렌더링, 마커 표시, 지도 이동/줌 기반의 동적 데이터 요청을 구현했습니다. 현재 위치 기반 탐색, 다양한 시트 컴포넌트 연동 UI를 통해 실제 지도 앱 수준의 기능을 구현했습니다.
+### 📱 UX 및 애니메이션 구성
+&nbsp; Tailwind CSS를 사용해 반응형 및 모바일 기반 스타일링을 빠르게 구축하고 Framer Motion을 통해 시트가 자연스럽게 발생하고 사라지는 애니메이션을 적용했습니다.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+#### [BE]
+- 프레임워크: Spring Boot
+- 언어: Java
+- 빌드 도구: Gradle
+- 인증: Spring Security, JWT
+- 데이터베이스: MySQL 8.0 (InnoDB)
+- ORM: Spring Data JPA
+- AI API 연동: OpenAI GPT (Spring AI 1.0.0)
+### 🔐 JWT (JSON Web Token) + Spring Security
+&nbsp; 세션 기반 인증 방식 대신 JWT와 Spring Security 필터 체인을 활용하여 무상태 인증 시스템을 구축했습니다. 모든 요청을 토큰 기반으로 검증하여 서버의 확장성을 확보하고 다중 서버 환경 구성 시 발생할 수 있는 세션 동기화 문제를 방지하여 서비스의 안정적인 운영 환경을 마련했습니다.
+### 🤖 Spring AI를 사용한 OPENAI API 연동
+&nbsp; Spring AI 프레임워크를 도입하여 OpenAI API 연동의 복잡한 과정을 단순화하고 LLM 기능을 프로젝트에 안정적으로 적용했습니다.
+### 📈 Entity Graph
+&nbsp; JPA 환경에서 연관 관계 조회 시 발생하는 N+1 쿼리 문제를 해결하기 위해 Entity Graph를 도입했습니다. API의 데이터 조회 특성에 맞춰 `@EntityGraph` 어노테이션으로 JOIN Fetching을 명시하여 불필요한 데이터베이스 접근을 줄여 핵심 API들의 응답 속도를 향상시키고자 했습니다.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 6. 향후 개선 및 발전 방안
+#### 1. 지도 뷰포트 기반 동적 조회
+&nbsp; 향후 성능과 효율성을 강화하기 위해 지도 뷰포트 기반 동적 조회를 추가할 계획입니다. 현재 데이터는 약 1,600개로 해당 기능이 존재하지 않아도 성능 문제가 발생하지 않습니다. 그러나, 추후 데이터가 늘어날 것을 대비해 사용할 위도, 경도 데이터를 POINT 형식으로 두어 확장성 높게 설정했습니다. 현재 화면에 보이는 영역에 포함된 가게 정보만 서버에서 불러오도록 하여 불필요한 데이터 요청을 줄이고 응답 속도를 크게 개선할 것으로 보여집니다.
+#### 2. 홍보를 통한 광고 수익
+&nbsp; 현재 경로 우대 지정 업소에 대한 홍보가 여실히 적은 편입니다. 해당 서비스를 통해 광고를 한다면 경로 우대 지정 업소에 대한 홍보가 되고 해당하는 업소들은 긍정적인 홍보 효과를 불러일으킬 수 있습니다. 특히 노인 인구가 많은 지방 업소에는 비교적 더욱 큰 효과가 일어날 것으로 보여집니다.
+#### 3. 복합형 복지 플랫폼
+&nbsp; 건강관리 프로그램, 무료 급식소 등과 결합하여 복합형 서비스로 나설 수 있습니다. 이를 통해 지속적인 운영 기반을 확보하고 노인 분들에게 더욱 다양한 기능을 제공할 수 있습니다.
+#### 4. 지차체 및 기관 연계 모델
+&nbsp; 서비스 API 형태로 연동하거나 지자체의 자체 복지 앱/홈페이지 내에 탑재할 수 있습니다. 이를 통해 지자체는 노인 대상 서비스 품질을 향상시키고, 본 서비스는 안정적인 파트너십을 통해 지속적인 운영 기반을 확보할 수 있습니다.
+#### 5. 향후 배포 계획
+&nbsp; 프론트엔드 프로젝트는 cloudflare로, 백엔드 프로젝트는 Docker와 AWS EC2, RDS를 활용해 GitHub Action 기반 CI/CD 배포를 진행할 계획입니다.
